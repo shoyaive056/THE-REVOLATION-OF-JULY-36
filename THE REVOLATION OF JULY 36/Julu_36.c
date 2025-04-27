@@ -1,0 +1,1154 @@
+
+//===== HEADER FILE ===
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h> // For usleep()
+
+//===== DEFINE SIZE ===
+#define MAX_LEADERS 100
+#define MAX_MARTYRS 2000
+#define MAX_PROTESTER 2000000
+#define MAX_NAME_LENGTH 100
+#define MAX_CONTRIBUTE_LENGTH 500
+#define MAX_ARTICLE_LENGTH 2000
+#define BUFFER_SIZE 256
+
+//===== DEFINE TEXT FILE NAEME ===
+#define FILENAME "users.txt"
+
+// ===== LEADER STRUCTURE ====
+typedef struct
+{
+    char name[MAX_NAME_LENGTH];
+    char role[MAX_NAME_LENGTH];
+    char contribute[MAX_CONTRIBUTE_LENGTH];
+} Leader;
+Leader leaders[MAX_LEADERS];
+int leader_count = 0;
+int flag = 0;
+//================================
+
+char name[MAX_NAME_LENGTH];
+char role[MAX_NAME_LENGTH];
+char university[MAX_NAME_LENGTH];
+char contribute[MAX_CONTRIBUTE_LENGTH];
+
+int martyr_count = 0;
+int protester_count = 0;
+int test();
+
+//===== MAIN FUNCTION ===
+void registerUser();
+void loginUser();
+int validateCredentials(const char *username, const char *password);
+int mainb();
+void teamMember();
+
+void displayHeading();
+void displayMenu();
+void initialMovement(); // 1. Initial Movement
+
+//===== LEADER ===
+void leaderMain(); // 2. Leader and Their Biography
+void addLeader();
+void viewleaders();
+void viewprofile();
+
+void participants();    // 3. Participants
+void stepsOfMovement(); // 4. Steps of Movement
+
+//===== MARTYRS ===
+void MartyrMain(); // 5. List of Martyrs
+void AddMartyr();
+void ListMartyrs();
+void ViewMartyrprofile();
+
+//===== PROTESTER ===
+void ProtesterMain(); // 6.Input Information About a Protester
+void AddProtester();
+void ListProtester();
+void Protesterprofile();
+
+void writeHistoricalStory(); // 7. Write a Historical Story or Memory
+void finalMovement();        // 8. Final Movement of the Protest
+void victoryJuly36();        // 9. Victory of July 36
+
+// Standard Colors
+#define BLK "\e[0;30m" // Black
+#define RED "\e[0;31m" // Red
+#define GRN "\e[0;32m" // Green
+#define YEL "\e[0;33m" // Yellow
+#define BLU "\e[0;34m" // Blue
+#define MAG "\e[0;35m" // Magenta
+#define CYN "\e[0;36m" // Cyan
+#define WHT "\e[0;37m" // White
+
+// Bright Colors
+#define BBLK "\e[1;30m" // Bright Black (Gray)
+#define BRED "\e[1;31m" // Bright Red
+#define BGRN "\e[1;32m" // Bright Green
+#define BYEL "\e[1;33m" // Bright Yellow
+#define BBLU "\e[1;34m" // Bright Blue
+#define BMAG "\e[1;35m" // Bright Magenta
+#define BCYN "\e[1;36m" // Bright Cyan
+#define BWHT "\e[1;37m" // Bright White
+
+// Background Colors
+#define BLK_BG "\e[40m" // Black Background
+#define RED_BG "\e[41m" // Red Background
+#define GRN_BG "\e[42m" // Green Background
+#define YEL_BG "\e[43m" // Yellow Background
+#define BLU_BG "\e[44m" // Blue Background
+#define MAG_BG "\e[45m" // Magenta Background
+#define CYN_BG "\e[46m" // Cyan Background
+#define WHT_BG "\e[47m" // White Background
+
+// Bright Background Colors
+#define BBLK_BG "\e[100m" // Bright Black (Gray) Background
+#define BRED_BG "\e[101m" // Bright Red Background
+#define BGRN_BG "\e[102m" // Bright Green Background
+#define BYEL_BG "\e[103m" // Bright Yellow Background
+#define BBLU_BG "\e[104m" // Bright Blue Background
+#define BMAG_BG "\e[105m" // Bright Magenta Background
+#define BCYN_BG "\e[106m" // Bright Cyan Background
+#define BWHT_BG "\e[107m" // Bright White Background
+void userRegistrationMenu();
+void displayWelcome();
+void userRegistrationMenu();
+// Reset
+#define RESET "\e[0m" // Reset all styles
+
+int main()
+{
+    displayWelcome();
+    int choice;
+    displayHeading();
+    do
+    {
+
+        userRegistrationMenu();
+        printf(BWHT "\nEnter your choice: " RESET);
+        scanf("%d", &choice);
+        getchar(); // Clear newline character from input buffer
+
+        switch (choice)
+        {
+        case 1:
+        {
+
+            getchar();
+            printf("\033[H\033[J");
+            registerUser();
+            break;
+        }
+        case 2:
+        {
+            // mainb();
+            getchar();
+            printf("\033[H\033[J");
+            loginUser();
+            break;
+        }
+        case 3:
+        {
+            teamMember();
+            //     getchar();
+            //     printf("\033[H\033[J");
+            //    // teamMember();
+            break;
+        }
+        case 4:
+        {
+            printf("Exiting...\n");
+            break;
+        }
+        default:
+            printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+// Function prototypes
+
+int mainb()
+{
+
+    int previous = 0, choice;
+    // displayHeading();
+
+    while (1)
+    {
+
+        displayMenu(); // call from "AllMenu c file"
+        if (previous)
+        {
+            printf(BCYN "\nPrevious option-%d." RESET, choice);
+        }
+        printf(BWHT "\nSelect an option: " RESET);
+        scanf("%d", &choice);
+        previous = 1;
+
+        switch (choice)
+        {
+        case 1:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            initialMovement();
+            break;
+        }
+
+        case 2:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            leaderMain();
+            break;
+        }
+
+        case 3:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            participants(); // write histry read txt file
+            break;
+        }
+
+        case 4:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            stepsOfMovement();
+            break;
+        }
+        case 5:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            MartyrMain();
+            break;
+        }
+        case 6:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            ProtesterMain();
+            break;
+        }
+
+        case 7:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            writeHistoricalStory();
+            break;
+        }
+        case 8:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            finalMovement();
+            break;
+        }
+        case 9:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            victoryJuly36();
+            break;
+        }
+        case 0:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            printf(BRED "Exiting program.\n" RESET);
+            printf(BRED "Exiting program. .\n" RESET);
+            printf(BRED "Exiting program. . . ...\n" RESET);
+
+            return 0;
+        }
+        default:
+            printf(BRED "Invalid option. Please try again.\n" RESET);
+        }
+    }
+
+    return 0;
+}
+
+// Function to register a new user
+void registerUser()
+{
+    FILE *file = fopen(FILENAME, "a");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening file for writing.\n" RESET);
+        return;
+    }
+
+    char username[50], password[50];
+    printf(BWHT "Enter a username: " RESET);
+    fgets(username, sizeof(username), stdin);
+    username[strcspn(username, "\n")] = '\0'; // Remove newline character
+
+    printf(BWHT "Enter a password: " RESET);
+    fgets(password, sizeof(password), stdin);
+    password[strcspn(password, "\n")] = '\0'; // Remove newline character
+
+    // Save username and password in the file
+    fprintf(file, "%s %s\n", username, password);
+    printf(BYEL "User registered successfully!\n" RESET);
+
+    fclose(file);
+}
+
+// Function to log in a user
+
+void loginUser()
+{
+    char username[50], password[50];
+    printf(BWHT "Enter your username: " RESET);
+    fgets(username, sizeof(username), stdin);
+    username[strcspn(username, "\n")] = '\0'; // Remove newline character
+
+    printf(BWHT "Enter your password: " RESET);
+    fgets(password, sizeof(password), stdin);
+    password[strcspn(password, "\n")] = '\0'; // Remove newline character
+
+    if (validateCredentials(username, password))
+    {
+        printf(BYEL "Login successful! Welcome, %s.\n" RESET, username);
+        mainb(); // Call the secondary main menu
+    }
+    else
+    {
+        printf(BRED "Invalid username or password. Please try again.\n" RESET);
+    }
+}
+
+// Function to validate user credentials
+int validateCredentials(const char *username, const char *password)
+{
+    FILE *file = fopen(FILENAME, "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening file for reading.\n" RESET);
+        return 0;
+    }
+
+    char storedUsername[50], storedPassword[50];
+    while (fscanf(file, "%s %s", storedUsername, storedPassword) != EOF)
+    {
+        if (strcmp(username, storedUsername) == 0 && strcmp(password, storedPassword) == 0)
+        {
+            fclose(file);
+            return 1; // Match found
+        }
+    }
+
+    fclose(file);
+    return 0; // No match found
+}
+
+void teamMember()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    Team Members\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    // printf(BGRN"ITS COMPLETED NO ERROR\n"RESET);
+
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("TeamMembers.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error reading developer Info.\n" RESET);
+        return;
+    }
+
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf(YEL "%s" RESET, buffer);
+    }
+    fclose(file);
+}
+
+void initialMovement()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    INITIAL MOVEMENT\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    // printf(BGRN"ITS COMPLETED NO ERROR\n"RESET);
+
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("txtFile_initial_Movement.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening initial movement.\n" RESET);
+        return;
+    }
+
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf(YEL "%s" RESET, buffer);
+    }
+    fclose(file);
+}
+
+void displayHeading()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "     History of the July 36, 2024 Student Movement\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+
+    char buffer[BUFFER_SIZE];
+    FILE *file = fopen("txtFile_HeadingHistory.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening heading file.\n" RESET);
+        return;
+    }
+
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf(BMAG "%s" RESET, buffer);
+    }
+    fclose(file);
+}
+
+void displayMenu()
+{
+    printf(BGRN "+-------------------------------------------------------+\n");
+    printf("|                      MAIN MENU                        |\n");
+    printf("|-------------------------------------------------------|\n");
+    printf("| 1. Initial Movement                                   |\n");
+    printf("| 2. Leader and Their Biography                         |\n");
+    printf("| 3. Participants                                       |\n");
+    printf("| 4. Steps of the Movement                              |\n");
+    printf("| 5. List of Martyrs                                    |\n");
+    printf("| 6. Input Information About a Protester                |\n");
+    printf("| 7. Write a Historical Story or Memory                 |\n");
+    printf("| 8. Final Movement of the Protest                      |\n");
+    printf("| 9. Victory of July 36                                 |\n");
+    printf("| 0. Exit                                               |\n");
+    printf("+-------------------------------------------------------+\n" RESET);
+}
+
+void leaderMenu()
+{
+    printf(BBLU "+-------------------------------------------------------+\n");
+    printf("|                -- Leader Biography --                 |\n");
+    printf("+-------------------------------------------------------+\n");
+    printf("|                                                       |\n");
+    printf("|           1. Add Leader                               |\n");
+    printf("|           2. View Leader                              |\n");
+    printf("|           3. View Leader Profile                      |\n");
+    printf("|           4. Return to Main Menu                      |\n");
+    printf("|                                                       |\n");
+    printf("+-------------------------------------------------------+\n" RESET);
+}
+
+void stepOfMovementMenu()
+{
+    printf(BYEL "+-------------------------------------------------------+\n");
+    printf("|              ---- STEP OF MOVEMENT ----               |\n");
+    printf("+-------------------------------------------------------+\n");
+    printf("|       1. 28 July Graffiti                             |\n");
+    printf("|       2. Wearing Red Cloth                            |\n");
+    printf("|       3. March for Justice                            |\n");
+    printf("|       4. Prayers and Mass Marches of Students         |\n");
+    printf("|       5. Step Down Hasina                             |\n");
+    printf("|       6. Long March to Dhaka                          |\n");
+    printf("|       7. Exit                                         |\n");
+    printf("+-------------------------------------------------------+\n" RESET);
+}
+
+void MartyarMenu()
+{
+    printf(BBLU "+-------------------------------------------------------+\n");
+    printf("|                  -- THE MARTYRS --                    |\n");
+    printf("+-------------------------------------------------------+\n");
+    printf("|                                                       |\n");
+    printf("|          1. Add Martyr                                |\n");
+    printf("|          2. View Martyrs                              |\n");
+    printf("|          3. View Martyr Profile                       |\n");
+    printf("|          4. Return to Main Menu                       |\n");
+    printf("|                                                       |\n");
+    printf("+-------------------------------------------------------+\n" RESET);
+}
+
+void protesterMenu()
+{
+    printf(BBLU "+-------------------------------------------------------+\n");
+    printf(BWHT "|                -- THE PROTESTERS --                   |\n" RESET);
+    printf(BBLU "+-------------------------------------------------------+\n" RESET);
+    printf(BWHT "|                                                       |\n");
+    printf(BWHT "|           1. Add Protester                            |\n");
+    printf(BWHT "|           2. View Protesters                          |\n");
+    printf(BWHT "|           3. View Protester Profile                   |\n");
+    printf(BWHT "|           4. Return to Main Menu                      |\n");
+    printf(BWHT "|                                                       |\n");
+    printf(BBLU "+-------------------------------------------------------+\n" RESET);
+}
+
+void userRegistrationMenu()
+{
+    printf(BWHT "+-------------------------------------------------------+\n");
+    printf(BWHT "|         User Registration and Login System            |\n");
+    printf(BWHT "+-------------------------------------------------------+\n");
+    printf(BWHT "|                                                       |\n");
+    printf(BWHT "|           1. Register                                 |\n");
+    printf(BWHT "|           2. Login                                    |\n");
+    printf(BWHT "|           3. Team                                     |\n");
+    printf(BWHT "|           4. Exit                                     |\n");
+    printf(BWHT "|                                                       |\n");
+    printf(BWHT "+-------------------------------------------------------+\n" RESET);
+}
+
+void leaderMain()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                 LEADER AND THEIR BIOGRAPHY\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    int choice;
+
+    // printf(BGRN "ITS COMPLETED NO ERROR\n" RESET);
+
+    while (1)
+    {
+        leaderMenu();
+        printf(BYEL "Select an option: " RESET);
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            addLeader();
+            break;
+        }
+        case 2:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            viewleaders();
+            break;
+        }
+        case 3:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            // viewprofile();
+            break;
+        }
+        case 4:
+            return;
+        default:
+            printf("Invalid option. Please try again.\n");
+        }
+    }
+}
+
+void loadLeaderCount();
+void saveLeaderCount();
+
+void addLeader()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                         ADD LEADER                      \n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    FILE *file = fopen("addleader.txt", "a"); // Open file in append mode
+
+    if (file == NULL)
+    {
+        printf(BRED "Error opening file for writing.\n" RESET);
+        return;
+    }
+    loadLeaderCount();
+
+    if (leader_count < MAX_LEADERS)
+    {
+        printf("\nLeader profile %d\n", leader_count + 1);
+        printf("-----------------------\n");
+        fprintf(file, "Leader profile %d\n-----------------------\n", leader_count + 1);
+
+        printf("\nEnter leader name: ");
+        getchar(); // Clear any leftover newline character
+        fgets(leaders[leader_count].name, MAX_NAME_LENGTH, stdin);
+
+        leaders[leader_count].name[strcspn(leaders[leader_count].name, "\n")] = '\0'; // Remove newline
+        fprintf(file, "Leader name: %s\n", leaders[leader_count].name);
+
+        printf("Enter role: ");
+        fgets(leaders[leader_count].role, MAX_NAME_LENGTH, stdin);
+        leaders[leader_count].role[strcspn(leaders[leader_count].role, "\n")] = '\0'; // Remove newline
+        fprintf(file, "Role: %s\n", leaders[leader_count].role);
+
+        printf("Enter contribution: ");
+        fgets(leaders[leader_count].contribute, MAX_CONTRIBUTE_LENGTH, stdin);
+        leaders[leader_count].contribute[strcspn(leaders[leader_count].contribute, "\n")] = '\0'; // Remove newline
+        fprintf(file, "Contribution: %s\n\n", leaders[leader_count].contribute);
+
+        leader_count++; // Increment leader count
+        printf(BWHT "\nLeader added successfully.\n\n" RESET);
+
+        flag = 1; // Set flag to save leader count
+        saveLeaderCount();
+    }
+    else
+    {
+        printf(BYEL "Maximum number of leaders reached.\n" RESET);
+    }
+
+    fclose(file); // Close the file
+}
+
+// Function to load leader count from a file
+void loadLeaderCount()
+{
+    FILE *countFile = fopen("leader_count.txt", "r");
+
+    if (countFile == NULL)
+    {
+        // If file doesn't exist, assume leader count is 0
+        printf(BYEL "No previous leader count found. Starting fresh.\n" RESET);
+        leader_count = 0;
+        return;
+    }
+
+    fscanf(countFile, "%d", &leader_count); // Read the last saved leader count
+    fclose(countFile);                      // Close the file
+}
+
+// Function to save leader count to a file
+void saveLeaderCount()
+{
+    FILE *countFile = fopen("leader_count.txt", "w");
+
+    if (countFile == NULL)
+    {
+        printf(BRED "Error opening file for saving leader count.\n" RESET);
+        return;
+    }
+
+    if (flag)
+    {
+        fprintf(countFile, "%d", leader_count); // Save the updated leader count
+    }
+
+    fclose(countFile); // Close the file
+}
+
+void viewleaders()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                        VIEW LEADERS                     \n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("addleader.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening initial movement.\n" RESET);
+        return;
+    }
+
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf("%s", buffer);
+    }
+    fclose(file);
+}
+
+void participants()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "               WHO PARTICIPATE IN MOVEMENT\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+
+    //   printf(BGRN "ITS COMPLETED NO ERROR\n" RESET);
+
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("txtFile_participate.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening participatns.\n" RESET);
+        return;
+    }
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf(CYN "%s" RESET, buffer);
+    }
+    fclose(file);
+}
+
+void stepsOfMovement()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    STEPS OF MOVEMENT\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    // printf("Error opening file for Reading.\n");
+
+    int choice;
+
+    do
+    {
+        stepOfMovementMenu(); // Display the menu
+        printf(BWHT "Enter your choice: " RESET);
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            // printf("You selected: 28 July Graffiti\n");
+            // Implement functionality for choice 1
+            break;
+        case 2:
+            // printf("You selected: Wearing Red Cloth\n");
+            //  Implement functionality for choice 2
+            break;
+        case 3:
+            // printf("You selected: March for Justice\n");
+            //  Implement functionality for choice 3
+            break;
+        case 4:
+            // printf("You selected: Prayers and Mass Marches of Students\n");
+            //  Implement functionality for choice 4
+            break;
+        case 5:
+            // printf("You selected: Step Down Hasina\n");
+            //  Implement functionality for choice 5
+            break;
+        case 6:
+            // printf("You selected: Long March to Dhaka\n");
+            //  Implement functionality for choice 6
+            break;
+        case 7:
+            printf(BRED "Exiting Step of Movement ...\n" RESET);
+            break;
+        default:
+            printf(BRED "Invalid choice. Please try again.\n" RESET);
+        }
+    } while (choice != 7);
+}
+
+void MartyrMain()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                      THE MARTYRS\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    int choice;
+
+    while (1)
+    {
+        MartyarMenu();
+        printf("Select an option: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            AddMartyr();
+            break;
+        }
+        case 2:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            ListMartyrs();
+            break;
+        }
+        case 3:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            // ViewMartyrprofile();
+            break;
+        }
+        case 4:
+            return;
+        default:
+            printf("Invalid option. Please try again.\n");
+        }
+    }
+}
+void ListMartyrs()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    MARTYER LIST\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("addmartyr.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error Reading martyer list.\n" RESET);
+        return;
+    }
+
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf(BWHT "%s" RESET, buffer);
+    }
+    fclose(file);
+}
+
+void loadCount();
+void saveCount();
+void AddMartyr();
+
+void AddMartyr()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    ADD MARTYRS \n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+
+    loadCount();
+    FILE *file = fopen("addmartyr.txt", "a");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening file for writing.\n" RESET);
+        return;
+    }
+
+    if (martyr_count < MAX_MARTYRS)
+    {
+        printf("\nMartyr profile %d\n", martyr_count + 1);
+        printf("-----------------------\n");
+        fprintf(file, "Martyr profile %d\n-----------------------\n", martyr_count + 1);
+
+        printf("\nEnter Martyr name: ");
+        getchar();
+        fgets(name, MAX_NAME_LENGTH, stdin);
+        name[strcspn(name, "\n")] = '\0';
+        fprintf(file, "Martyr name: %s\n", name);
+
+        printf("Enter University: ");
+        fgets(university, MAX_NAME_LENGTH, stdin);
+        university[strcspn(university, "\n")] = '\0';
+        fprintf(file, "University: %s\n\n", university);
+
+        martyr_count++;
+        printf(BWHT "\nMartyr added successfully.\n" RESET);
+
+        flag = 1;
+        saveCount();
+    }
+    else
+    {
+        printf(BRED "Maximum number of martyrs reached.\n" RESET);
+    }
+
+    fclose(file);
+}
+
+void loadCount()
+{
+    FILE *countFile = fopen("martyr_count.txt", "r");
+    if (countFile == NULL)
+    {
+        printf(BWHT "No previous martyr count found. Starting fresh.\n" RESET);
+        martyr_count = 0;
+        return;
+    }
+
+    fscanf(countFile, "%d", &martyr_count);
+    fclose(countFile);
+}
+
+void saveCount()
+{
+    FILE *countFile = fopen("martyr_count.txt", "w");
+    if (countFile == NULL)
+    {
+        printf(BRED "Error opening file for saving martyr count.\n" RESET);
+        return;
+    }
+
+    if (flag)
+    {
+        fprintf(countFile, "%d", martyr_count);
+    }
+
+    fclose(countFile);
+}
+
+void ProtesterMain()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                     THE PROTESTER\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    int choice;
+
+    while (1)
+    {
+        protesterMenu();
+        printf(BWHT "Select an option: " RESET);
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            AddProtester();
+            break;
+        }
+        case 2:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            ListProtester();
+            break;
+        }
+        case 3:
+        {
+            getchar();
+            printf("\033[H\033[J");
+            // Protesterprofile();
+            break;
+        }
+        case 4:
+            return;
+        default:
+            printf(BRED "Invalid option. Please try again.\n" RESET);
+        }
+    }
+}
+
+void loadCountProtester();
+void saveCountProtester();
+
+void AddProtester()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    ADD PROTESTER\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+
+    loadCountProtester();
+    FILE *file = fopen("addproteser.txt", "a");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening file for writing.\n" RESET);
+        return;
+    }
+
+    if (protester_count < MAX_PROTESTER)
+    {
+        printf("\nProtester profile %d\n", protester_count + 1);
+        printf("-----------------------\n");
+        fprintf(file, "Protester profile %d\n-----------------------\n", protester_count + 1);
+
+        printf("Enter Protester name: ");
+        getchar();
+        fgets(name, MAX_NAME_LENGTH, stdin);
+        name[strcspn(name, "\n")] = '\0';
+        fprintf(file, "Protester name: %s\n", name);
+
+        printf("Enter University: ");
+        fgets(university, MAX_NAME_LENGTH, stdin);
+        university[strcspn(university, "\n")] = '\0';
+        fprintf(file, "University: %s\n\n", university);
+
+        protester_count++;
+        printf(BWHT "\nProtester added successfully.\n" RESET);
+
+        flag = 1;
+        saveCountProtester();
+    }
+    else
+    {
+        printf(BRED "Maximum number of Protesters reached.\n" RESET);
+    }
+
+    fclose(file);
+}
+
+void loadCountProtester()
+{
+    FILE *countFile = fopen("protester_count.txt", "r");
+    if (countFile == NULL)
+    {
+        printf(BWHT "No previous Protester count found. Starting fresh.\n" RESET);
+        protester_count = 0;
+        return;
+    }
+
+    fscanf(countFile, "%d", &protester_count);
+    fclose(countFile);
+}
+
+void saveCountProtester()
+{
+    FILE *countFile = fopen("protester_count.txt", "w");
+    if (countFile == NULL)
+    {
+        printf(BRED "Error opening file for saving Protester count.\n" RESET);
+        return;
+    }
+
+    if (flag)
+    {
+        fprintf(countFile, "%d", protester_count);
+    }
+
+    fclose(countFile);
+}
+void ListProtester()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                       PROTESTER LIST\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("addproteser.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error Reading Protester list.\n" RESET);
+        return;
+    }
+
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf(BWHT "%s" RESET, buffer);
+    }
+    fclose(file);
+}
+
+void writeHistoricalStory()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                      HISTORICAL STORY\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    char story[2000];
+
+    printf("\nWrite a Historical Story or Memory:\n");
+    printf("Enter story (up to 2000 characters): ");
+    fgets(story, sizeof(story), stdin);
+
+    story[strcspn(story, "\n")] = '\0';
+
+    // Write story to file
+    FILE *file = fopen("HistoricalStory.txt", "a");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening file for writing.\n" RESET);
+        return;
+    }
+    fprintf(file, "Story: %s\n", story);
+    fclose(file);
+
+    printf("\nHistorical story recorded successfully.\n");
+
+    /*
+    // Read and display story from file
+    file = fopen("../7_history_story_function/HistoricalStory.txt", "r");
+    if (file == NULL)
+    {
+        perror(BRED "Error opening file for reading.\n" RESET);
+        return;
+    }
+    printf("\nRecorded Story:\n");
+    while (fgets(story, sizeof(story), file))
+    {
+        printf("%s", story);
+    }
+    fclose(file);*/
+}
+void finalMovement()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                     FINAL MOVEMENT\n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("txtFile_FinalMovement.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening finalmovemnt.\n\n" RESET);
+        return;
+    }
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf("%s", buffer);
+    }
+    fclose(file);
+}
+
+void victoryJuly36()
+{
+    printf(BCYN "=========================================================\n");
+    printf(BWHT "                    VICTORY AND 36 JULY \n" RESET);
+    printf(BCYN "=========================================================\n" RESET);
+    char buffer[BUFFER_SIZE];
+
+    FILE *file = fopen("txtFile_victory.txt", "r");
+    if (file == NULL)
+    {
+        printf(BRED "Error opening number 9.\n" RESET);
+        return;
+    }
+    while (fgets(buffer, BUFFER_SIZE, file))
+    {
+        printf("%s", buffer);
+    }
+    fclose(file);
+}
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
+void sleepMicroseconds(int microseconds)
+{
+#ifdef _WIN32
+    Sleep(microseconds / 1000); // Convert microseconds to milliseconds
+#else
+    usleep(microseconds); // For POSIX systems
+#endif
+}
+
+// Function to print text with delay
+void printWithDelay(const char *text, int delay)
+{
+    while (*text)
+    {
+        putchar(*text++);
+        fflush(stdout);           // Ensure characters are printed immediately
+        sleepMicroseconds(delay); // Delay in microseconds (1 ms = 1000 us)
+    }
+}
+
+// Function to display the welcome message
+void displayWelcome()
+{
+    printf("\n");
+    printWithDelay("=============================================\n", 30000);
+    printWithDelay("          Welcome to the Program!            \n", 30000);
+    printWithDelay("    A Project on the July 2024 Movement      \n", 30000);
+    printWithDelay("=============================================\n\n", 30000);
+
+    printWithDelay("Loading", 50000);
+    for (int i = 0; i < 3; i++)
+    {
+        sleepMicroseconds(500000); // 500 ms delay
+        putchar('.');
+        fflush(stdout);
+    }
+    printf("\n\n");
+}
+// last

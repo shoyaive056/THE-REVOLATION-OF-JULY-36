@@ -1,0 +1,45 @@
+Martyr profile 1
+-----------------------
+Martyr name: tarek
+University: daffodil
+
+Martyr profile 2
+-----------------------
+Martyr name: shnati
+University: rangpur
+
+Martyr profile 3
+-----------------------
+Martyr name: afda
+University: adfa
+
+Martyr profile 4
+-----------------------
+Martyr name: fadf
+University: adfa
+
+Martyr profile 5
+-----------------------
+Martyr name: DAF
+University: ADFAF
+
+Martyr profile 6
+-----------------------
+Martyr name: fkl
+University: adf
+
+Martyr profile 7
+-----------------------
+Martyr name: sf
+University: afaf
+
+Martyr profile 8
+-----------------------
+Martyr name: F
+University: AFA
+
+Martyr profile 9
+-----------------------
+Martyr name: fad
+University: adfa
+
